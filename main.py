@@ -105,9 +105,9 @@ def run_batch_triage(
     metric_table.add_column("Benchmark Context", style="dim")
 
     metric_table.add_row("Total Batch Units", f"{total_units:,}", "100% Inbound Inspected")
-    metric_table.add_row("Projected Net Salvage Value", f"${total_nsv:,.2f}", "Exact Mathematical Realization")
-    metric_table.add_row("Traditional Naive Salvage", f"${uplift['naive_salvage_value']:,.2f}", "FIFO Bulk Liquidation Baseline")
-    metric_table.add_row("Net Dollar Uplift", f"[bold green]+${uplift['dollar_uplift']:,.2f}[/]", f"+{uplift['pct_uplift']}% Value Lift")
+    metric_table.add_row("Projected Net Salvage Value", f"₹{total_nsv:,.2f}", "Exact Mathematical Realization")
+    metric_table.add_row("Traditional Naive Salvage", f"₹{uplift['naive_salvage_value']:,.2f}", "FIFO Bulk Liquidation Baseline")
+    metric_table.add_row("Net Dollar Uplift", f"[bold green]+₹{uplift['dollar_uplift']:,.2f}[/]", f"+{uplift['pct_uplift']}% Value Lift")
     metric_table.add_row("Refurb Labor Utilized", f"{opt_results['labor_hours_used']} hrs", "Technician Work Shift Load")
 
     console.print(metric_table)
@@ -207,7 +207,7 @@ def scan_single_unit(return_id: str):
     scan_table.add_row("Detected Fault", str(row['fault_code']))
     scan_table.add_row("Days Since Dispatch", f"{row['days_since_dispatch']} days (Window: {row['window_days']} days)")
     scan_table.add_row("ML Prediction", f"{ml_pred['disposition']} (Confidence: {ml_pred['confidence'] * 100:.1f}%)")
-    scan_table.add_row("Exact Net Salvage Value", f"${eval_res['max_nsv']:.2f}")
+    scan_table.add_row("Exact Net Salvage Value", f"₹{eval_res['max_nsv']:.2f}")
     scan_table.add_row("Assigned Route Channel", f"[bold green]{eval_res['best_channel']}[/]")
 
     console.print(scan_table)

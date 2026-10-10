@@ -102,13 +102,77 @@ def calculate_unit_nsv(row: Dict[str, Any]) -> Dict[str, Any]:
     best_channel = max(channel_nsv, key=channel_nsv.get)
     max_nsv = channel_nsv[best_channel]
 
+    # Auditable Unit-Level Formula Breakdown (Challenge 10 Standard)
+    resale_pct = float(row.get('resale_pct_of_new', 0.75))
+    resale_gross_undepreciated = retail_price * resale_pct
+    refurb_before_fees = resale_gross_undepreciated - parts_cost
+    vendor_credit_amount = cost_price * credit_pct if is_rtv_eligible else 0.0
+    liq_rate = float(row.get('recovery_pct_of_cost') or row.get('liquidation_recovery_pct') or costs.DEFAULT_LIQUIDATION_RATE)
+    liquidation_amount = cost_price * liq_rate
+
+    time_to_cash = {
+        'REFURBISH': {
+            'processing_days': int(row.get('days_required', 5)),
+            'time_to_sale_days': costs.REFURB_SALE_DAYS,
+            'payment_days': costs.REFURB_PAYMENT_DAYS,
+            'total_days': int(row.get('days_required', 5)) + costs.REFURB_SALE_DAYS + costs.REFURB_PAYMENT_DAYS
+        },
+        'RTV': {
+            'processing_days': 2,
+            'time_to_sale_days': 0,
+            'payment_days': costs.VENDOR_CREDIT_PAYMENT_DAYS,
+            'total_days': 2 + costs.VENDOR_CREDIT_PAYMENT_DAYS
+        },
+        'LIQUIDATE': {
+            'processing_days': 1,
+            'time_to_sale_days': 2,
+            'payment_days': costs.LIQUIDATION_PAYMENT_DAYS,
+            'total_days': 1 + 2 + costs.LIQUIDATION_PAYMENT_DAYS
+        },
+        'RESTOCK': {
+            'processing_days': 1,
+            'time_to_sale_days': 5,
+            'payment_days': 7,
+            'total_days': 13
+        },
+        'SCRAP': {
+            'processing_days': 1,
+            'time_to_sale_days': 0,
+            'payment_days': 1,
+            'total_days': 2
+        }
+    }
+
+    breakdown = {
+        'selling_price': retail_price,
+        'cost_price': cost_price,
+        'resale_pct_of_new': resale_pct,
+        'refurb_cost': parts_cost,
+        'refurb_recovery_before_fees': round(refurb_before_fees, 2),
+        'vendor_credit_pct': credit_pct,
+        'vendor_credit_amount': round(vendor_credit_amount, 2),
+        'is_rtv_eligible': is_rtv_eligible,
+        'rtv_window_days': window,
+        'days_since_dispatch': days,
+        'liquidation_pct': liq_rate,
+        'liquidation_amount': round(liquidation_amount, 2),
+        'baseline_salvage_value': round(liquidation_amount, 2),
+        'time_to_cash': time_to_cash,
+        'formula_refurb': f"₹{retail_price:,.0f} × {resale_pct*100:.0f}% − ₹{parts_cost:,.0f} = ₹{refurb_before_fees:,.2f}",
+        'formula_rtv': f"₹{cost_price:,.0f} × {credit_pct*100:.0f}% = ₹{vendor_credit_amount:,.2f}" if is_rtv_eligible else "Ineligible (30-day window expired)",
+        'formula_liq': f"₹{cost_price:,.0f} × {liq_rate*100:.0f}% = ₹{liquidation_amount:,.2f}",
+        'net_recovery_accounting_note': "Gross recovery proceeds less direct variable recovery costs. Sunk historical purchase cost is excluded to prevent double-deduction."
+    }
+
     return {
         'channel_nsv': channel_nsv,
         'best_channel': best_channel,
         'max_nsv': max_nsv,
         'is_rtv_eligible': is_rtv_eligible,
         'is_hazardous': is_hazardous,
-        'refurb_hours_required': labor_hours if grade in ['B', 'C'] and not is_hazardous else 0.0
+        'refurb_hours_required': labor_hours if grade in ['B', 'C'] and not is_hazardous else 0.0,
+        'breakdown': breakdown,
+        'time_to_cash': time_to_cash.get(best_channel, time_to_cash['LIQUIDATE'])
     }
 
 

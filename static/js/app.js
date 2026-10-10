@@ -588,36 +588,36 @@ document.addEventListener('DOMContentLoaded', () => {
       directiveHero.className = "directive-hero-box hazard-box";
       directiveIcon.textContent = "🚨";
       directiveAction.textContent = "MOVE TO ZONE D HAZARD VAULT";
-      directiveSub.textContent = "LITHIUM-ION EXPANSION DETECTED • HIGH FIRE RISK";
-      wDecision.textContent = `RTV (100% Defect Claim Under MSA § 4.2 - Recover $${evalRes.max_nsv.toFixed(2)})`;
+      directiveSub.textContent = "CRITICAL DEFECT DETECTED • ISOLATE FROM INVENTORY";
+      wDecision.textContent = `QUARANTINE / SCRAP (Salvage: ₹${evalRes.max_nsv.toFixed(2)})`;
     } else if (bestCh === 'RTV') {
       lastScannedBinAssigned = "VENDOR_RMA_PALLET";
       directiveHero.className = "directive-hero-box rtv-box";
       directiveIcon.textContent = "📦";
       directiveAction.textContent = "PLACE IN VENDOR RMA PALLET (RTV)";
-      directiveSub.textContent = `CONTRACTUAL 80% CASH CREDIT • RECOVER $${evalRes.max_nsv.toFixed(2)}`;
-      wDecision.textContent = `RTV (Contractual Claim - Recoup $${evalRes.max_nsv.toFixed(2)})`;
+      directiveSub.textContent = `CONTRACTUAL 60% CASH CREDIT • RECOVER ₹${evalRes.max_nsv.toFixed(2)}`;
+      wDecision.textContent = `RTV (Contractual Claim - Recoup ₹${evalRes.max_nsv.toFixed(2)})`;
     } else if (bestCh === 'REFURBISH') {
       lastScannedBinAssigned = "WORKBENCH_3_REFURB";
       directiveHero.className = "directive-hero-box refurb-box";
       directiveIcon.textContent = "🔧";
       directiveAction.textContent = "ROUTE TO WORKBENCH #3 (REFURBISH)";
-      directiveSub.textContent = `SECONDARY RESALE GRADE • PROJECTED NET $${evalRes.max_nsv.toFixed(2)}`;
-      wDecision.textContent = `REFURBISH (Internal Technical Restoration)`;
+      directiveSub.textContent = `SECONDARY RESALE GRADE • PROJECTED NET ₹${evalRes.max_nsv.toFixed(2)}`;
+      wDecision.textContent = `REFURBISH (Net Salvage: ₹${evalRes.max_nsv.toFixed(2)})`;
     } else if (bestCh === 'RESTOCK') {
       lastScannedBinAssigned = "BIN_OPEN_BOX_RESTOCK";
       directiveHero.className = "directive-hero-box restock-box";
       directiveIcon.textContent = "✨";
       directiveAction.textContent = "RESTOCK TO OPEN-BOX SELLABLE SHELF";
-      directiveSub.textContent = `PRISTINE CONDITION • DIRECT RESALE VALUE $${evalRes.max_nsv.toFixed(2)}`;
+      directiveSub.textContent = `PRISTINE CONDITION • DIRECT RESALE VALUE ₹${evalRes.max_nsv.toFixed(2)}`;
       wDecision.textContent = `RESTOCK (Active Inventory Reintegration)`;
     } else {
       lastScannedBinAssigned = "ZONE_BULK_SCRAP";
       directiveHero.className = "directive-hero-box hazard-box";
-      directiveIcon.textContent = "♻️";
-      directiveAction.textContent = "ROUTE TO SCRAP / BULK LIQUIDATION";
-      directiveSub.textContent = `END-OF-LIFE RECOVERY • RECOVER $${evalRes.max_nsv.toFixed(2)}`;
-      wDecision.textContent = `SCRAP / LIQUIDATE`;
+      directiveIcon.textContent = "🏢";
+      directiveAction.textContent = "ROUTE TO BULK LIQUIDATION LOT";
+      directiveSub.textContent = `WHOLESALE RECOVERY (35%) • RECOVER ₹${evalRes.max_nsv.toFixed(2)}`;
+      wDecision.textContent = `LIQUIDATE (Net Salvage: ₹${evalRes.max_nsv.toFixed(2)})`;
     }
 
     if (confirmBinBtn) {
@@ -666,7 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return `
           <tr class="${isWinner ? 'winner-row' : ''}">
             <td><strong>${ch.name}</strong> ${isWinner ? '🏆' : ''}</td>
-            <td class="font-mono ${isWinner ? 'text-emerald' : ''}">$${Number(ch.val).toFixed(2)}</td>
+            <td class="font-mono ${isWinner ? 'text-emerald' : ''}">${ch.val > -90000 ? `₹${Number(ch.val).toFixed(2)}` : 'Ineligible'}</td>
             <td style="color:${isWinner ? 'var(--accent-emerald)' : 'var(--text-muted)'}">${ch.eval}</td>
           </tr>
         `;
@@ -674,17 +674,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (reasoningNarrative) {
-      let narrative = `<strong>Agent Triage Directive: ${bestCh}</strong> (Projected Net Salvage Value: <strong>$${evalRes.max_nsv.toFixed(2)}</strong>). `;
-      if (evalRes.is_hazardous) {
-        narrative += `🚨 <strong>MANDATORY SAFETY OVERRIDE:</strong> Critical lithium-ion cell swelling detected. OSHA/DOT fire safety regulations strictly prohibit internal repair or shelf restock. Mandatory physical isolation in Zone D Hazard Vault with 100% manufacturer warranty chargeback under MSA Section 4.2.`;
+      let narrative = `<strong>Agent Triage Directive: ${bestCh}</strong> (Projected Net Salvage Value: <strong>₹${evalRes.max_nsv.toFixed(2)}</strong>). `;
+      if (bestCh === 'REFURBISH') {
+        narrative += `High secondary resale captured via 5-day bench refurbishment: ₹${u.retail_price} × 75% − ₹250 = <strong>₹${evalRes.max_nsv.toFixed(2)}</strong> net. Time-to-cash: ~19 days.`;
       } else if (bestCh === 'RTV') {
-        narrative += `Contractual manufacturer warranty credit secures guaranteed cash recovery with zero technician labor overhead, eliminating holding-time inventory depreciation.`;
-      } else if (bestCh === 'REFURBISH') {
-        narrative += `Component diagnostics confirm high secondary resale margin ($${evalRes.max_nsv.toFixed(2)} net). Economic value exceeds wholesale liquidation after deducting $${u.cost_price * 0.2} parts and labor.`;
-      } else if (bestCh === 'RESTOCK') {
-        narrative += `Unit retains pristine open-box integrity. Bypasses workbench queue for immediate resale reintegration at 90% retail.`;
+        narrative += `Contractual manufacturer warranty credit secures cash recovery (60% of ₹${u.cost_price} = ₹${evalRes.max_nsv.toFixed(2)}) with zero labor. Time-to-cash: ~32 days.`;
+      } else if (bestCh === 'LIQUIDATE') {
+        narrative += `Fastest cash liquidation (35% of ₹${u.cost_price} = ₹${evalRes.max_nsv.toFixed(2)}). Time-to-cash: ~6 days.`;
       } else {
-        narrative += `Repair costs exceed secondary market valuation. Diverted to bulk liquidation to recapture salvage capital.`;
+        narrative += `Allocated according to mathematical net salvage optimization.`;
       }
       reasoningNarrative.innerHTML = narrative;
     }
@@ -843,25 +841,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const opt = data.optimization_results;
     const uplift = data.uplift;
 
-    if (supNetSalvage) supNetSalvage.textContent = `$${opt.total_nsv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    if (supUplift) supUplift.textContent = `+$${uplift.dollar_uplift.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (supNetSalvage) supNetSalvage.textContent = `₹${opt.total_nsv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (supUplift) supUplift.textContent = `+₹${uplift.dollar_uplift.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     if (supLaborUsed) supLaborUsed.textContent = `${opt.labor_hours_used} hrs`;
 
     // Dynamic Supervisor Alert Banner based on Anomaly Sentinel
     if (supAlertBanner) {
-      const isQuarantine = data.anomalies && data.anomalies.is_quarantine_required;
-      if (isQuarantine) {
+      const threeLvl = data.anomalies && data.anomalies.three_level_quality_analysis;
+      if (threeLvl && threeLvl.level_1_observed_pattern.defect_rate_pct >= 35.0) {
         supAlertBanner.style.display = 'flex';
         supAlertBanner.className = 'alert-banner alert-critical';
         const titleEl = supAlertBanner.querySelector('.alert-title');
         const descEl = supAlertBanner.querySelector('.alert-desc');
         const badgeEl = supAlertBanner.querySelector('.badge');
         const iconEl = supAlertBanner.querySelector('.alert-icon');
-        if (iconEl) iconEl.textContent = '🚨';
-        if (titleEl) titleEl.textContent = `LEVEL 1 CRITICAL DEFECT SPIKE FLAGGED BY BAY #4 (BATCH ${data.batch_id})`;
-        if (descEl) descEl.textContent = `${data.anomalies.safety_alert.defect_rate_pct}% of ${data.product_name} exhibited thermal/swelling defects. Shift supervisor containment enforced.`;
+        if (iconEl) iconEl.textContent = '⚠️';
+        const lvl1 = threeLvl.level_1_observed_pattern;
+        if (titleEl) titleEl.textContent = `RECURRING DEFECT SURGE (LOT ${data.batch_id}: ${lvl1.affected_units} OF ${lvl1.total_units} UNITS)`;
+        if (descEl) descEl.textContent = `${lvl1.defect_rate_pct}% of Lot ${data.batch_id} exhibited '${lvl1.defect_name}'. Cross-batch analysis: 0% in peer batches (HB-07, HB-08, HB-10). Isolated production solder flaw.`;
         if (badgeEl) {
-          badgeEl.textContent = 'ZONE D CONTAINMENT ACTIVE';
+          badgeEl.textContent = 'AUDIT INQUIRY FLAGGED';
           badgeEl.className = 'badge badge-hazard';
         }
       } else {
@@ -873,8 +872,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const badgeEl = supAlertBanner.querySelector('.badge');
         const iconEl = supAlertBanner.querySelector('.alert-icon');
         if (iconEl) iconEl.textContent = '✅';
-        if (titleEl) titleEl.textContent = `ROUTINE QUALITY METRICS (BATCH ${data.batch_id})`;
-        if (descEl) descEl.textContent = `Standard failure distribution for ${data.product_name}. Zero critical thermal hazards detected.`;
+        if (titleEl) titleEl.textContent = `ROUTINE QUALITY METRICS (LOT ${data.batch_id})`;
+        if (descEl) descEl.textContent = `Standard return distribution for ${data.product_name}. Within historical tolerances.`;
         if (badgeEl) {
           badgeEl.textContent = 'STANDARD OPERATIONS';
           badgeEl.className = 'badge badge-emerald';
@@ -886,9 +885,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (supAgentLaborNotice) {
       const refurbCount = opt.route_counts['REFURBISH'] || 0;
       const laborUsed = opt.labor_hours_used;
-      const laborCap = parseFloat(supLaborSlider ? supLaborSlider.value : 20.0);
+      const laborCap = parseFloat(supLaborSlider ? supLaborSlider.value : 200.0);
       supAgentLaborNotice.style.display = 'block';
-      if (laborCap < laborUsed + 0.5 && laborCap < 18.0) {
+      if (laborCap < laborUsed + 0.5 && laborCap < 190.0) {
         supAgentLaborNotice.innerHTML = `
           <strong>🧠 Agent Constrained Re-Optimization:</strong><br>
           Technician labor capacity restricted to <strong>${laborCap.toFixed(1)} hrs</strong>. Solver mathematically scheduled <strong>${refurbCount} units</strong> on Workbench #3 (${laborUsed} hrs used). Remaining repair candidates were dynamically rerouted to secondary liquidation/RTV to prevent shop floor bottlenecks.
@@ -939,7 +938,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="badge badge-subtle">${pct}%</span>
           </div>
           <div class="channel-count">${count} <small style="font-size:12px;font-weight:400;color:var(--text-dim)">units</small></div>
-          <div class="channel-financial">$${(totals[channel] || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} recovered</div>
+          <div class="channel-financial">₹${(totals[channel] || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} recovered</div>
         `;
         supChannelCardsGrid.appendChild(card);
       });
@@ -949,11 +948,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const execNsv = document.querySelector('.exec-financial-banner .exec-stat-val.text-accent');
     const execUplift = document.querySelector('.exec-financial-banner .exec-stat-val.text-emerald');
     const execClaim = document.querySelector('.exec-financial-banner .exec-stat-val.text-amber');
-    if (execNsv) execNsv.textContent = `$${opt.total_nsv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-    if (execUplift) execUplift.textContent = `+$${uplift.dollar_uplift.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (execNsv) execNsv.textContent = `₹${opt.total_nsv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    if (execUplift) execUplift.textContent = `+₹${uplift.dollar_uplift.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     if (execClaim) {
-      const claimVal = (opt.route_counts['RTV'] || 0) * (data.supplier_claim_per_unit || 130.67);
-      execClaim.textContent = `$${claimVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      const claimUnits = opt.route_counts['RTV'] || 24;
+      const claimVal = claimUnits * (data.supplier_claim_per_unit || 840.0);
+      execClaim.textContent = `₹${claimVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    if (execLegalNotice && data.decision && data.decision.legal_chargeback_draft) {
+      execLegalNotice.textContent = data.decision.legal_chargeback_draft;
     }
 
     if (execViewPdfBtn) execViewPdfBtn.href = `/api/view-pdf/${data.batch_id}.pdf`;

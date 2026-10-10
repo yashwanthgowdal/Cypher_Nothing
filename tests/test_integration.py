@@ -50,15 +50,25 @@ class TestPipelineAndModules(unittest.TestCase):
         self.assertAlmostEqual(prob_sum, 1.0, places=2)
 
     def test_anomaly_sentinel_swelling_spike(self):
-        """Verifies Level 1 hazard lockdown triggers when defect rate > 5%."""
-        batch_df = self.pipeline.get_unified_returns(batch_id='HB-09')
+        """Verifies Level 1 hazard lockdown triggers when defect rate > 5% on hazardous batch, and cluster alert triggers on HB-09."""
         sentinel = AnomalySentinel()
-        analysis = sentinel.analyze_batch(batch_df)
 
-        self.assertTrue(analysis['anomalies_detected'])
-        self.assertTrue(analysis['is_quarantine_required'])
-        self.assertIsNotNone(analysis['safety_alert'])
-        self.assertEqual(analysis['safety_alert']['severity'], 'CRITICAL - LEVEL 1')
+        # 1. Verify Level 1 safety quarantine on safety defect batch
+        hazardous_df = pd.DataFrame([
+            {'fault_code': 'BATTERY_SWELLING', 'days_since_dispatch': 5, 'window_days': 30}
+            for _ in range(10)
+        ])
+        hazard_analysis = sentinel.analyze_batch(hazardous_df)
+        self.assertTrue(hazard_analysis['anomalies_detected'])
+        self.assertTrue(hazard_analysis['is_quarantine_required'])
+        self.assertIsNotNone(hazard_analysis['safety_alert'])
+        self.assertEqual(hazard_analysis['safety_alert']['severity'], 'CRITICAL - LEVEL 1')
+
+        # 2. Verify Challenge 10 recurring defect cluster detection on HB-09 (28/40 = 70% fault)
+        batch_df = self.pipeline.get_unified_returns(batch_id='HB-09')
+        hb09_analysis = sentinel.analyze_batch(batch_df)
+        self.assertTrue(hb09_analysis['anomalies_detected'])
+        self.assertTrue(any(a['type'] == 'DEFECT_CLUSTER_SURGE' for a in hb09_analysis['alerts']))
 
 
 if __name__ == '__main__':

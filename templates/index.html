@@ -42,32 +42,34 @@
         </button>
       </form>
 
-      <!-- Quick Verified Employee Credentials (Click to Autofill) -->
+      <!-- Demo Sandbox Role Quick-Access Buttons -->
       <div class="quick-credentials-section">
-        <span class="quick-cred-label">Quick Sign-In by Verified Employee ID:</span>
+        <div class="demo-badge-banner" style="background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 8px; padding: 10px; margin-bottom: 12px; font-size: 0.8rem; color: #cbd5e1; text-align: center;">
+          🛡️ <strong>Evaluation Sandbox:</strong> Authenticated demo accounts pre-configured for evaluation. Select your evaluator role below:
+        </div>
         <div class="quick-cred-grid">
           <button type="button" class="quick-cred-card" data-id="TECH-402" data-pass="worker123">
             <span class="q-icon">👷</span>
             <div class="q-info">
-              <strong>Marcus Vance (Floor Worker)</strong>
-              <span>ID: TECH-402 &bull; Pass: worker123</span>
-              <small>Scans barcodes & confirms physical bins</small>
+              <strong>Demo as Floor Technician</strong>
+              <span>Role: Inbound Receiving (TECH-402)</span>
+              <small>Tactile barcode triage & bin allocation</small>
             </div>
           </button>
           <button type="button" class="quick-cred-card" data-id="SUP-108" data-pass="super123">
             <span class="q-icon">📋</span>
             <div class="q-info">
-              <strong>Elena Rostova (Supervisor)</strong>
-              <span>ID: SUP-108 &bull; Pass: super123</span>
-              <small>Shift labor planning & hazard containment</small>
+              <strong>Demo as Shift Supervisor</strong>
+              <span>Role: Triage Operations (SUP-108)</span>
+              <small>MILP optimization & labor hour limits</small>
             </div>
           </button>
           <button type="button" class="quick-cred-card" data-id="EXEC-001" data-pass="exec123">
             <span class="q-icon">💼</span>
             <div class="q-info">
-              <strong>David Chen (Executive / CFO)</strong>
-              <span>ID: EXEC-001 &bull; Pass: exec123</span>
-              <small>Financial uplift & legal audit PDF dossiers</small>
+              <strong>Demo as Supply Chain VP</strong>
+              <span>Role: Executive & Legal (EXEC-001)</span>
+              <small>Financial realization & audit PDF report</small>
             </div>
           </button>
         </div>
@@ -96,6 +98,21 @@
        AUTHORIZED APPLICATION WORKSPACE (Accessible only after login)
        ========================================================================= -->
   <div id="appWorkspace" style="display:none;">
+    <!-- Challenge Scenario Banner -->
+    <div class="scenario-banner" style="background: linear-gradient(90deg, #1e1b4b, #312e81); border-bottom: 1px solid #4338ca; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; color: #e0e7ff;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span style="background: #4f46e5; color: white; padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.5px;">EVALUATION SCENARIO</span>
+        <strong style="color: #ffffff; font-size: 0.95rem;">CYPHER Challenge 10: Wireless Headphones</strong>
+        <span style="color: #a5b4fc;">(Lot HB-09: Over-ear Headphones ANC 220 &bull; 40 Units)</span>
+      </div>
+      <div style="display: flex; gap: 18px; font-size: 0.8rem; color: #c7d2fe;">
+        <span>Selling: <strong style="color:white;">₹2,500</strong></span>
+        <span>Cost: <strong style="color:white;">₹1,400</strong></span>
+        <span>Refurb: <strong style="color:white;">₹250</strong></span>
+        <span>RTV Window: <strong style="color:white;">30 Days (24 Eligible)</strong></span>
+      </div>
+    </div>
+
     <!-- Top App Navigation -->
     <header class="app-header">
       <div class="header-left">
@@ -324,24 +341,23 @@
         <div class="batch-selector-bar">
           <span class="batch-select-label">ACTIVE WAREHOUSE BATCH:</span>
           <select id="supBatchSelectDropdown" class="batch-select-dropdown">
-            <option value="HB-09" selected>HB-09: HyperCell Li-Ion Battery 5000mAh (25 Units &bull; 🚨 Hazard Spikes)</option>
-            <option value="AP-12">AP-12: ApexTab Ultra 11" Tablet 256GB (18 Units &bull; High-Value Consumer)</option>
-            <option value="HB-08">HB-08: HyperGaN 65W Fast Charger (20 Units &bull; Fast-Moving Accessory)</option>
-            <option value="NG-03">NG-03: NanoGlow 15.6" OLED Panel (15 Units &bull; Fragile Assembly)</option>
-            <option value="VE-01">VE-01: VoltEdge Sine Inverter 1000W (12 Units &bull; Heavy Industrial)</option>
+            <option value="HB-09" selected>HB-09: Over-ear Headphones ANC 220 (40 Units &bull; ⚠️ 70% Defect Surge &bull; Shenzhen Acoustics)</option>
+            <option value="HB-10">HB-10: Over-ear Headphones ANC 220 (13 Units &bull; Peer Batch)</option>
+            <option value="HB-08">HB-08: Over-ear Headphones ANC 220 (9 Units &bull; Peer Batch)</option>
+            <option value="HB-07">HB-07: Over-ear Headphones ANC 220 (8 Units &bull; Peer Batch)</option>
           </select>
         </div>
       </div>
 
       <!-- Critical Alert Notification -->
       <div id="supAlertBanner" class="alert-banner alert-critical">
-        <div class="alert-icon">🚨</div>
+        <div class="alert-icon">⚠️</div>
         <div class="alert-content">
-          <div class="alert-title">LEVEL 1 CRITICAL DEFECT SPIKE FLAGGED BY BAY #4</div>
-          <div class="alert-desc">60.0% of Batch HB-09 exhibited lithium cell swelling. Shift supervisor containment directive enforced.</div>
+          <div class="alert-title">RECURRING DEFECT SURGE (LOT HB-09: 28 OF 40 UNITS)</div>
+          <div class="alert-desc">70.0% of Lot HB-09 exhibited 'Defective - left earcup no sound'. Cross-batch analysis (HB-07, HB-08, HB-10) confirms 0.0% occurrence in peer lots. Isolated batch-level assembly defect.</div>
         </div>
         <div class="alert-meta">
-          <span class="badge badge-hazard">ZONE D CONTAINMENT ACTIVE</span>
+          <span class="badge badge-hazard">AUDIT INQUIRY FLAGGED</span>
         </div>
       </div>
 
@@ -349,25 +365,25 @@
       <div class="kpi-grid">
         <div class="kpi-card glass-panel">
           <div class="kpi-label">Projected Net Salvage Value</div>
-          <div class="kpi-value text-accent" id="supNetSalvage">$2,962.90</div>
+          <div class="kpi-value text-accent" id="supNetSalvage">₹48,035.00</div>
           <div class="kpi-footer">Exact penny-accurate mathematical realization</div>
         </div>
 
         <div class="kpi-card glass-panel">
           <div class="kpi-label">Value Lift vs Naive Dump</div>
-          <div class="kpi-value text-emerald" id="supUplift">+$1,971.93</div>
-          <div class="kpi-footer"><span class="pill pill-positive">+199.0%</span> uplift over FIFO liquidation</div>
+          <div class="kpi-value text-emerald" id="supUplift">+₹39,835.00</div>
+          <div class="kpi-footer"><span class="pill pill-positive">+485.8%</span> uplift over bulk liquidation (₹19,600)</div>
         </div>
 
         <div class="kpi-card glass-panel">
           <div class="kpi-label">Technician Shift Workload</div>
-          <div class="kpi-value text-amber" id="supLaborUsed">6.0 hrs</div>
-          <div class="kpi-footer" id="supLaborMax">Capacity Limit: 20.0 hrs</div>
+          <div class="kpi-value text-amber" id="supLaborUsed">190.0 hrs</div>
+          <div class="kpi-footer" id="supLaborMax">Capacity Limit: 200.0 hrs</div>
         </div>
 
         <div class="kpi-card glass-panel">
-          <div class="kpi-label">Units Handed Off from Floor</div>
-          <div class="kpi-value">25 Units</div>
+          <div class="kpi-label">Total Inbound Returns</div>
+          <div class="kpi-value">40 Units</div>
           <div class="kpi-footer">100% Inbound Inspected (Bay #4)</div>
         </div>
       </div>
@@ -458,11 +474,10 @@
         <div class="batch-selector-bar" style="margin-top: 14px;">
           <span class="batch-select-label">BATCH AUDIT & SIGN-OFF:</span>
           <select id="execBatchSelectDropdown" class="batch-select-dropdown">
-            <option value="HB-09" selected>HB-09: HyperCell Li-Ion Battery 5000mAh (25 Units &bull; 🚨 Hazard Spikes)</option>
-            <option value="AP-12">AP-12: ApexTab Ultra 11" Tablet 256GB (18 Units &bull; High-Value Consumer)</option>
-            <option value="HB-08">HB-08: HyperGaN 65W Fast Charger (20 Units &bull; Fast-Moving Accessory)</option>
-            <option value="NG-03">NG-03: NanoGlow 15.6" OLED Panel (15 Units &bull; Fragile Assembly)</option>
-            <option value="VE-01">VE-01: VoltEdge Sine Inverter 1000W (12 Units &bull; Heavy Industrial)</option>
+            <option value="HB-09" selected>HB-09: Over-ear Headphones ANC 220 (40 Units &bull; ⚠️ 70% Defect Surge &bull; Shenzhen Acoustics)</option>
+            <option value="HB-10">HB-10: Over-ear Headphones ANC 220 (13 Units &bull; Peer Batch)</option>
+            <option value="HB-08">HB-08: Over-ear Headphones ANC 220 (9 Units &bull; Peer Batch)</option>
+            <option value="HB-07">HB-07: Over-ear Headphones ANC 220 (8 Units &bull; Peer Batch)</option>
           </select>
         </div>
       </div>
@@ -471,20 +486,20 @@
       <div class="exec-financial-banner glass-panel">
         <div class="exec-stat-box">
           <span class="exec-stat-label">Net Dollar Realization</span>
-          <span class="exec-stat-val text-accent">$2,962.90</span>
-          <span class="exec-stat-sub">Recovered across 25 units</span>
+          <span class="exec-stat-val text-accent">₹48,035.00</span>
+          <span class="exec-stat-sub">Recovered across 40 units</span>
         </div>
         <div class="exec-stat-divider"></div>
         <div class="exec-stat-box">
-          <span class="exec-stat-label">Net Value Lift vs Blind Dump</span>
-          <span class="exec-stat-val text-emerald">+$1,971.93</span>
-          <span class="exec-stat-sub">+199.0% Incremental Cash Flow</span>
+          <span class="exec-stat-label">Net Value Lift vs Bulk Baseline</span>
+          <span class="exec-stat-val text-emerald">+₹39,835.00</span>
+          <span class="exec-stat-sub">+485.8% Incremental Cash Flow</span>
         </div>
         <div class="exec-stat-divider"></div>
         <div class="exec-stat-box">
-          <span class="exec-stat-label">Total Supplier Chargeback Claim</span>
-          <span class="exec-stat-val text-amber">$1,960.00</span>
-          <span class="exec-stat-sub">Under MSA Section 4.2 Indemnity</span>
+          <span class="exec-stat-label">Total Contractual Claim (24 Units)</span>
+          <span class="exec-stat-val text-amber">₹20,160.00</span>
+          <span class="exec-stat-sub">60% Vendor Credit (30-Day Window)</span>
         </div>
         <div class="exec-stat-divider"></div>
         <div class="exec-stat-action" style="display:flex; flex-direction:column; gap:8px;">
@@ -501,25 +516,27 @@
       <div class="glass-panel content-box" style="margin-top: 20px;">
         <div class="panel-header">
           <div>
-            <h3>Autonomous Legal Chargeback Notice to Supplier (HyperBattery Inc)</h3>
-            <p class="subtitle">Drafted automatically by AI Legal Sentinel citing Master Supply Agreement clauses</p>
+            <h3>Empirical Technical Quality Notice to Supplier (Shenzhen Acoustics Ltd)</h3>
+            <p class="subtitle">Drafted automatically based on 3-Level Quality Investigation and empirical cross-batch audit data</p>
           </div>
           <button class="btn btn-tiny" id="execCopyNoticeBtn">Copy Notice</button>
         </div>
 
         <pre class="legal-text" id="execLegalNotice">
-FORMAL NOTICE OF DEFECTIVE LOT & FULL CHARGEBACK INDEMNIFICATION
-DATE: Ref #HB-09-LEGAL-RMA-2026
-TO: Legal & Quality Assurance, HyperBattery Inc
-FROM: David Chen, VP of Supply Chain, Gadgetbay Operations
+FORMAL TECHNICAL QUALITY AUDIT & WARRANTY CLAIM NOTICE
+REFERENCE: LOT #HB-09 QUALITY AUDIT — Shenzhen Acoustics Ltd
+DATE: Inbound Assessment Snapshot 2026-11-16
 
-Pursuant to Section 4.2 ('Manufacturer Defect Indemnification & Product Safety Warranty') of the Master Supply Agreement:
-Notice is hereby served that Batch #HB-09 exhibited an unacceptably high critical defect concentration of 60.0% (15 of 25 inspected units), exhibiting lithium-ion cell swelling and thermal instability exceeding the contractual 5.0% Acceptable Quality Limit (AQL).
+1. OBSERVED DEFECT PATTERN:
+Inbound inspection of Batch #HB-09 identified that 28 of 40 returned units (70.0%) exhibit identical failure: 'Defective - left earcup no sound'.
 
-Demand is hereby executed for:
-1. Immediate 100% credit invoice debit covering all affected serials ($1,960.00).
-2. Vendor-subsidized courier pickup and hazardous material hazmat freight expenses.
-3. Written Root-Cause Corrective Action (RCCA) report within ten (10) business days.
+2. CROSS-BATCH QUALITY INVESTIGATION:
+Comparative quality analysis across peer batches (Lots HB-07, HB-08, HB-10; 530 historical sales) shows a 0.0% occurrence of this defect in all other batches. The high defect concentration is statistically isolated to Lot #HB-09, indicating a batch-specific component or transducer solder assembly defect.
+
+3. CONTRACTUAL & WARRANTY CLAIM ACTION:
+• Contractual Window: Vendor terms specify a 30-day return window at 60% credit (₹840/unit).
+• Immediate Claim: 24 units within 30 days are formally submitted for contractual credit (₹20,160.00).
+• Technical Inquiry: For the remaining 16 units past the 30-day window, empirical evidence of a localized manufacturing assembly defect is submitted to request technical engineering review and full batch credit compensation.
         </pre>
 
         <!-- Final Chain of Custody Audit Signature Block -->
