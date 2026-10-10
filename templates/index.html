@@ -205,27 +205,28 @@
           </div>
 
           <div class="scanner-form" style="margin-top: 16px;">
-            <label for="workerScannerInput">Or Type Return Serial Manually:</label>
+            <label for="workerScannerInput">Or Type Return Serial / SKU Manually:</label>
             <div class="input-with-button">
-              <input type="text" id="workerScannerInput" placeholder="e.g. RET-HB09-101" class="scanner-input-large">
+              <input type="text" id="workerScannerInput" placeholder="e.g. R50813 or HP-220" class="scanner-input-large">
               <button id="workerScanTriggerBtn" class="btn btn-secondary">LOOKUP</button>
             </div>
           </div>
 
           <div class="quick-barcode-pallet">
-            <span class="pallet-label">Quick Scan Pallet (Sample HB-09 Returns):</span>
+            <span class="pallet-label">Quick Scan Pallet (Sample Challenge Returns):</span>
             <div class="pallet-chips">
-              <button class="worker-chip" data-serial="RET-HB09-101">RET-HB09-101 (Swelling / Hazard)</button>
-              <button class="worker-chip" data-serial="RET-HB09-118">RET-HB09-118 (Grade A / Restock)</button>
-              <button class="worker-chip" data-serial="RET-HB09-121">RET-HB09-121 (Grade B / Refurb)</button>
-              <button class="worker-chip" data-serial="RET-HB09-113">RET-HB09-113 (Expired / Scrap)</button>
+              <button class="worker-chip" data-serial="R50813">R50813 (HP-220 / Refurb Grade B)</button>
+              <button class="worker-chip" data-serial="R50182">R50182 (Smartwatch / Restock Grade A)</button>
+              <button class="worker-chip" data-serial="R50162">R50162 (Soundbar / RTV Warranty Claim)</button>
+              <button class="worker-chip" data-serial="R50780">R50780 (HP-220 / Power Failure Defect)</button>
+              <button class="worker-chip" data-serial="R50574">R50574 (Laptop / B2B Liquidation)</button>
             </div>
           </div>
 
           <div class="batch-progress-box">
             <div class="progress-labels">
               <span>Batch HB-09 Inbound Progress:</span>
-              <span id="workerProgressText">25 / 25 Units Triaged (100%)</span>
+              <span id="workerProgressText">40 / 40 Units Triaged (100%)</span>
             </div>
             <div class="progress-bar-bg">
               <div class="progress-bar-fill" id="workerProgressBar" style="width: 100%;"></div>
@@ -242,32 +243,32 @@
           </div>
 
           <div class="directive-content" id="workerDirectiveBody">
-            <div class="directive-hero-box hazard-box" id="directiveHero">
-              <div class="directive-icon" id="directiveIcon">🚨</div>
-              <div class="directive-action-text" id="directiveAction">MOVE TO ZONE D HAZARD VAULT</div>
-              <div class="directive-sub-text" id="directiveSub">BATTERY SWELLING DETECTED &bull; FIRE HAZARD</div>
+            <div class="directive-hero-box refurb-box" id="directiveHero">
+              <div class="directive-icon" id="directiveIcon">🔧</div>
+              <div class="directive-action-text" id="directiveAction">ROUTE TO REFURBISHMENT BENCH</div>
+              <div class="directive-sub-text" id="directiveSub">RESTORATION NSV: ₹1,181 &bull; REPAIR EST: 7.5 HRS</div>
             </div>
 
             <div class="unit-inspection-summary" id="workerInspectionSummary">
               <div class="summary-row">
                 <span class="row-label">Serial Number:</span>
-                <span class="row-val font-mono" id="wSerial">RET-HB09-101</span>
+                <span class="row-val font-mono" id="wSerial">R50813</span>
               </div>
               <div class="summary-row">
                 <span class="row-label">Product Name:</span>
-                <span class="row-val" id="wProduct">HyperCell Li-Ion Battery Pack 5000mAh</span>
+                <span class="row-val" id="wProduct">Over-ear Headphones ANC 220 (HP-220)</span>
               </div>
               <div class="summary-row">
                 <span class="row-label">Visual Grade:</span>
-                <span class="row-val badge badge-subtle" id="wGrade">Grade D (Damaged Casing)</span>
+                <span class="row-val badge badge-subtle" id="wGrade">Grade B (Customer Return)</span>
               </div>
               <div class="summary-row">
                 <span class="row-label">Vendor Warranty:</span>
-                <span class="row-val text-emerald" id="wWarranty">12 days elapsed (Within 30-day window)</span>
+                <span class="row-val text-emerald" id="wWarranty">Eligible (30-day window)</span>
               </div>
               <div class="summary-row">
                 <span class="row-label">AI Decision:</span>
-                <span class="row-val font-mono text-accent" id="wDecision">RTV (100% Defect Claim Under MSA § 4.2)</span>
+                <span class="row-val font-mono text-accent" id="wDecision">REFURBISH (Net Salvage ₹1,181)</span>
               </div>
             </div>
 

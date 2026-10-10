@@ -87,15 +87,16 @@ def init_db():
     )
     """)
 
-    # Populate inventory manifest from DataPipeline if table is empty
+    # Populate inventory manifest from DataPipeline
     cursor.execute("SELECT COUNT(*) FROM inventory_manifest")
     count = cursor.fetchone()[0]
-    if count == 0:
-        pipeline = DataPipeline()
-        df = pipeline.get_unified_returns()
+    pipeline = DataPipeline()
+    df = pipeline.get_unified_returns()
+    if count != len(df):
+        cursor.execute("DELETE FROM inventory_manifest")
         for _, row in df.iterrows():
             cursor.execute("""
-            INSERT OR IGNORE INTO inventory_manifest 
+            INSERT OR REPLACE INTO inventory_manifest 
             (return_id, sku, supplier_batch, grade, fault_code, product_name, supplier, cost_price, retail_price, status)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'PENDING_SCAN')
             """, (

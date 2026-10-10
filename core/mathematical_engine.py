@@ -87,7 +87,8 @@ def calculate_unit_nsv(row: Dict[str, Any]) -> Dict[str, Any]:
 
     # 4. LIQUIDATE CHANNEL (Wholesale pallet auction)
     if not is_hazardous:
-        liquidate_gross = cost_price * costs.DEFAULT_LIQUIDATION_RATE
+        liq_rate = float(row.get('recovery_pct_of_cost') or row.get('liquidation_recovery_pct') or costs.DEFAULT_LIQUIDATION_RATE)
+        liquidate_gross = cost_price * liq_rate
         channel_nsv['LIQUIDATE'] = round(liquidate_gross - costs.HANDLING_COST_PER_UNIT, 2)
     else:
         channel_nsv['LIQUIDATE'] = -99999.0
@@ -120,7 +121,9 @@ def optimize_batch(
     Executes rigorous batch optimization over all returns.
     Accounts for operational capacity limits (available technician hours, spare parts inventory).
     """
-    if batch_df.empty:
+    if isinstance(batch_df, list):
+        batch_df = pd.DataFrame(batch_df)
+    if batch_df is None or batch_df.empty:
         return {
             'route_counts': {},
             'total_nsv': 0.0,

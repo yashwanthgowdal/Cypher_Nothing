@@ -42,7 +42,7 @@ class AnomalySentinel:
         safety_rate = safety_count / total_units if total_units > 0 else 0.0
 
         safety_alert = None
-        if safety_rate > self.safety_threshold:
+        if safety_rate >= self.safety_threshold and safety_count > 0:
             is_quarantine_required = True
             safety_alert = {
                 "alert_id": "ALT-SEC-001",
