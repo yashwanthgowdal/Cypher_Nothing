@@ -1,0 +1,5 @@
+supplier,rtv_allowed,window_days,restock_credit_pct,contact_email,sla_business_days,msa_contract_id
+HyperBattery Inc,True,30,0.8,rma-ops@hyperbattery.com,5,MSA-HYPER-2025-V2
+ApexTech Electronics,True,45,0.85,reverse-logistics@apextech.io,7,MSA-APEX-2024-V4
+NanoGlow Displays,False,14,0.0,claims@nanoglow.com,10,MSA-NANO-2024-V1
+VoltEdge Power Systems,True,30,0.75,warranty@voltedge.net,6,MSA-VOLT-2025-V1

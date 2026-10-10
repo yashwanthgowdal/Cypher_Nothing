@@ -1,0 +1,6 @@
+sku,product_name,supplier,cost_price,retail_price,category
+SKU-HB-BAT5000,HyperCell Li-Ion Battery Pack 5000mAh,HyperBattery Inc,145.0,249.99,Battery & Power
+SKU-HB-CHRG65W,HyperGaN 65W Fast Wall Charger,HyperBattery Inc,42.0,79.99,Accessories
+SKU-APX-TAB11,ApexTab Ultra 11-inch Tablet 256GB,ApexTech Electronics,310.0,499.99,Tablets
+SKU-NG-DISP15,NanoGlow 15.6 OLED Panel Assembly,NanoGlow Displays,115.0,189.99,Displays
+SKU-VE-INV1000,VoltEdge Pure Sine Wave Inverter 1000W,VoltEdge Power Systems,220.0,369.99,Power Systems

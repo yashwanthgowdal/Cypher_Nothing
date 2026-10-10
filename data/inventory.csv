@@ -1,0 +1,6 @@
+sku,stock_on_hand,safety_threshold,warehouse_zone
+SKU-HB-BAT5000,184,50,Zone D-Hazardous
+SKU-HB-CHRG65W,340,100,Zone A-Shelving
+SKU-APX-TAB11,92,25,Zone B-Secure
+SKU-NG-DISP15,65,20,Zone C-Fragile
+SKU-VE-INV1000,48,15,Zone A-Heavy

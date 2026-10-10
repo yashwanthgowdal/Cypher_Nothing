@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gadgetbay AI Reverse Logistics — Enterprise Role-Based Command Center</title>
+  <meta name="description" content="Role-based autonomous reverse logistics platform connecting receiving technicians, operations supervisors, and finance executives.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       ENTERPRISE AUTHENTICATION GATE (Login / Role Verification)
+       Strict role isolation: Worker, Supervisor, Executive each require verified ID & password.
+       ========================================================================= -->
+  <div id="loginGateScreen" class="login-gate-screen">
+    <div class="login-gate-card glass-panel">
+      <div class="login-brand-header">
+        <div class="brand-badge-lg">GB-RLS</div>
+        <h2>GADGETBAY REVERSE LOGISTICS</h2>
+        <p class="login-gate-subtitle">Enterprise Chain-of-Custody Authentication Gateway</p>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <div id="loginErrorAlert" class="login-error-alert" style="display:none;"></div>
+
+        <div class="form-group">
+          <label for="loginIdInput">Worker / Employee ID:</label>
+          <input type="text" id="loginIdInput" placeholder="e.g. TECH-402, SUP-108, EXEC-001" class="form-control-large font-mono" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="loginPasswordInput">Security Password:</label>
+          <input type="password" id="loginPasswordInput" placeholder="Enter security password" class="form-control-large" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-large btn-full-width">
+          🔐 Sign In to Authorized Station
+        </button>
+      </form>
+
+      <!-- Quick Verified Employee Credentials (Click to Autofill) -->
+      <div class="quick-credentials-section">
+        <span class="quick-cred-label">Quick Sign-In by Verified Employee ID:</span>
+        <div class="quick-cred-grid">
+          <button type="button" class="quick-cred-card" data-id="TECH-402" data-pass="worker123">
+            <span class="q-icon">👷</span>
+            <div class="q-info">
+              <strong>Marcus Vance (Floor Worker)</strong>
+              <span>ID: TECH-402 &bull; Pass: worker123</span>
+              <small>Scans barcodes & confirms physical bins</small>
+            </div>
+          </button>
+          <button type="button" class="quick-cred-card" data-id="SUP-108" data-pass="super123">
+            <span class="q-icon">📋</span>
+            <div class="q-info">
+              <strong>Elena Rostova (Supervisor)</strong>
+              <span>ID: SUP-108 &bull; Pass: super123</span>
+              <small>Shift labor planning & hazard containment</small>
+            </div>
+          </button>
+          <button type="button" class="quick-cred-card" data-id="EXEC-001" data-pass="exec123">
+            <span class="q-icon">💼</span>
+            <div class="q-info">
+              <strong>David Chen (Executive / CFO)</strong>
+              <span>ID: EXEC-001 &bull; Pass: exec123</span>
+              <small>Financial uplift & legal audit PDF dossiers</small>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Google Workspace Single Sign-On -->
+      <div class="google-auth-section">
+        <div class="auth-divider"><span>OR ENTERPRISE SSO</span></div>
+        <button type="button" id="googleSignInBtn" class="btn btn-google btn-full-width">
+          <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          Sign In with Google Workspace
+        </button>
+        <p class="google-sso-note">
+          ℹ️ <strong>Google SSO Ready:</strong> Direct OAuth Client ID hook available in <code>core/config.py</code>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       AUTHORIZED APPLICATION WORKSPACE (Accessible only after login)
+       ========================================================================= -->
+  <div id="appWorkspace" style="display:none;">
+    <!-- Top App Navigation -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="brand-badge">GB-RLS</div>
+        <div class="brand-text">
+          <h1>GADGETBAY REVERSE LOGISTICS</h1>
+          <p class="subtitle" id="currentRoleSubtitle">Role: Inbound Receiving Technician (Bay #4)</p>
+        </div>
+      </div>
+      
+      <div class="header-center">
+        <!-- Presentation Chain of Custody Selector (Controlled by Role) -->
+        <div class="role-selector-bar" id="roleSelectorBar" style="display:none;">
+          <span class="role-bar-label">CHAIN OF CUSTODY:</span>
+          <button class="role-tab-btn active" data-role="worker">👷 1. Floor Worker</button>
+          <button class="role-tab-btn" data-role="supervisor">📋 2. Supervisor</button>
+          <button class="role-tab-btn" data-role="executive">👔 3. Finance & Legal</button>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="user-pill" id="userPill">
+          <span class="user-avatar" id="userAvatar">MV</span>
+          <div class="user-details">
+            <span class="user-name" id="userName">Marcus Vance</span>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span class="status-indicator-dot"></span>
+              <span class="user-id" id="userId">ID: TECH-402</span>
+            </div>
+          </div>
+        </div>
+        <button id="logoutBtn" class="btn btn-tiny btn-danger">🔒 Log Out</button>
+      </div>
+    </header>
+
+  <main class="main-container">
+
+    <!-- =========================================================================
+         ROLE 1: FLOOR RECEIVING TECHNICIAN INTERFACE (Marcus Vance)
+         Clean, tactile, industrial scanner interface for floor workers.
+         ========================================================================= -->
+    <section id="roleWorkerView" class="role-view active">
+      <div class="view-intro-banner worker-banner">
+        <div class="banner-badge">STEP 1 IN REVERSE LOGISTICS CHAIN</div>
+        <h2>Inbound Receiving & Barcode Triage Station</h2>
+        <p>Receiving Bay #4 &bull; Operator Marcus Vance (TECH-402) &bull; Active Batch: <strong id="workerBatchBadge">HB-09 (25 Units Inbound)</strong></p>
+      </div>
+
+      <div class="worker-grid">
+        <!-- Left: Industrial Scanner Gun -->
+        <div class="glass-panel scanner-industrial-card">
+          <div class="scanner-status-bar">
+            <span class="scanner-live-dot"></span> LASER TERMINAL READY
+          </div>
+
+          <!-- Real Laptop Webcam Scanner -->
+          <div class="webcam-scanner-module">
+            <div class="webcam-module-header">
+              <span class="webcam-badge">📷 LIVE WEBCAM SCANNER GUN</span>
+              <span class="badge badge-emerald" id="cameraPill">STANDBY</span>
+            </div>
+            
+            <div class="webcam-viewport-frame" id="webcamFrame">
+              <!-- Html5Qrcode Full-Frame Engine Mount -->
+              <div id="webcamReader"></div>
+              
+              <div class="webcam-reticle" id="webcamReticle" style="display:none;">
+                <div class="reticle-line"></div>
+                <div class="reticle-guide" id="reticleGuideText">SCANNING FULL VIEWPORT</div>
+              </div>
+
+              <!-- Live HUD Guidance Badge -->
+              <div class="webcam-hud-guidance" id="webcamHudGuidance" style="display:none;">
+                <span id="hudGuidanceIcon">🔍</span>
+                <span id="hudGuidanceText">Scanning full camera view for any barcode or QR code...</span>
+              </div>
+
+              <div class="webcam-placeholder" id="webcamPlaceholder">
+                <div class="webcam-placeholder-icon">📷</div>
+                <p>Click "Start Laptop Camera" to scan any physical barcode (chocolate, groceries, electronics) or phone screen</p>
+                <span class="webcam-hint-text">💡 Full-frame detection: Barcode can be anywhere in view with space on sides</span>
+              </div>
+            </div>
+
+            <div class="scanner-sub-tip">
+              ⚡ <strong>Full-Frame Mode:</strong> Scans anywhere across the entire camera view. Hold barcode ~15–25 cm (6–10 in) from camera so it is sharp & in focus.
+            </div>
+
+            <div class="webcam-btn-row">
+              <button id="startWebcamBtn" class="btn btn-primary">📷 Start Laptop Camera</button>
+              <button id="stopWebcamBtn" class="btn btn-secondary" style="display:none;">⏹ Stop Camera</button>
+              <button id="uploadBarcodeBtn" class="btn btn-secondary">📁 Upload Barcode Photo</button>
+              <input type="file" id="barcodeFileInput" accept="image/*" style="display:none;">
+            </div>
+
+            <div id="cameraDetectionAlert" class="detection-toast" style="display:none;">
+              <div class="toast-top-row">
+                <span id="toastIcon">🎯</span>
+                <span id="toastStatusTitle">Detected:</span>
+                <strong id="detectedCodeText" class="font-mono">--</strong>
+                <span class="badge badge-subtle" id="detectedFormatBadge">FORMAT</span>
+              </div>
+              <div class="toast-sub-msg" id="detectedSubMsg">
+                Searching inventory database...
+              </div>
+            </div>
+          </div>
+
+          <div class="scanner-form" style="margin-top: 16px;">
+            <label for="workerScannerInput">Or Type Return Serial Manually:</label>
+            <div class="input-with-button">
+              <input type="text" id="workerScannerInput" placeholder="e.g. RET-HB09-101" class="scanner-input-large">
+              <button id="workerScanTriggerBtn" class="btn btn-secondary">LOOKUP</button>
+            </div>
+          </div>
+
+          <div class="quick-barcode-pallet">
+            <span class="pallet-label">Quick Scan Pallet (Sample HB-09 Returns):</span>
+            <div class="pallet-chips">
+              <button class="worker-chip" data-serial="RET-HB09-101">RET-HB09-101 (Swelling / Hazard)</button>
+              <button class="worker-chip" data-serial="RET-HB09-118">RET-HB09-118 (Grade A / Restock)</button>
+              <button class="worker-chip" data-serial="RET-HB09-121">RET-HB09-121 (Grade B / Refurb)</button>
+              <button class="worker-chip" data-serial="RET-HB09-113">RET-HB09-113 (Expired / Scrap)</button>
+            </div>
+          </div>
+
+          <div class="batch-progress-box">
+            <div class="progress-labels">
+              <span>Batch HB-09 Inbound Progress:</span>
+              <span id="workerProgressText">25 / 25 Units Triaged (100%)</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="workerProgressBar" style="width: 100%;"></div>
+            </div>
+            <div id="binSuccessNotice" class="bin-success-notice" style="display:none; margin-top: 12px;"></div>
+          </div>
+        </div>
+
+        <!-- Right: Tactical Routing Instruction Card (Big & Unambiguous) -->
+        <div class="glass-panel directive-display-card" id="workerDirectiveCard">
+          <div class="directive-header">
+            <h3>REAL-TIME BINNING INSTRUCTION</h3>
+            <span class="badge badge-emerald" id="workerLatencyBadge">< 5ms INFERENCE</span>
+          </div>
+
+          <div class="directive-content" id="workerDirectiveBody">
+            <div class="directive-hero-box hazard-box" id="directiveHero">
+              <div class="directive-icon" id="directiveIcon">🚨</div>
+              <div class="directive-action-text" id="directiveAction">MOVE TO ZONE D HAZARD VAULT</div>
+              <div class="directive-sub-text" id="directiveSub">BATTERY SWELLING DETECTED &bull; FIRE HAZARD</div>
+            </div>
+
+            <div class="unit-inspection-summary" id="workerInspectionSummary">
+              <div class="summary-row">
+                <span class="row-label">Serial Number:</span>
+                <span class="row-val font-mono" id="wSerial">RET-HB09-101</span>
+              </div>
+              <div class="summary-row">
+                <span class="row-label">Product Name:</span>
+                <span class="row-val" id="wProduct">HyperCell Li-Ion Battery Pack 5000mAh</span>
+              </div>
+              <div class="summary-row">
+                <span class="row-label">Visual Grade:</span>
+                <span class="row-val badge badge-subtle" id="wGrade">Grade D (Damaged Casing)</span>
+              </div>
+              <div class="summary-row">
+                <span class="row-label">Vendor Warranty:</span>
+                <span class="row-val text-emerald" id="wWarranty">12 days elapsed (Within 30-day window)</span>
+              </div>
+              <div class="summary-row">
+                <span class="row-label">AI Decision:</span>
+                <span class="row-val font-mono text-accent" id="wDecision">RTV (100% Defect Claim Under MSA § 4.2)</span>
+              </div>
+            </div>
+
+            <!-- Agent Working & Multi-Channel Economics Drawer -->
+            <div style="margin-top: 10px; margin-bottom: 6px;">
+              <button id="toggleAgentReasoningBtn" type="button" class="btn btn-secondary btn-tiny btn-full-width">
+                🧠 Show Agent Reasoning & Channel Matrix
+              </button>
+            </div>
+            <div id="agentReasoningBox" class="agent-reasoning-drawer" style="display:none; margin-top: 8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="font-size:11px; color:#C7D2FE; letter-spacing:0.5px;">AUTONOMOUS NSV TRADE-OFF MATRIX</strong>
+                <span class="badge badge-subtle" style="font-size:9.5px;">OBSERVE &bull; REASON &bull; DECIDE</span>
+              </div>
+              <table class="reasoning-table">
+                <thead>
+                  <tr>
+                    <th>Channel</th>
+                    <th>Projected NSV</th>
+                    <th>Agent Evaluation</th>
+                  </tr>
+                </thead>
+                <tbody id="reasoningTableBody">
+                  <!-- Filled dynamically by JavaScript -->
+                </tbody>
+              </table>
+              <div id="reasoningNarrative" class="reasoning-narrative">
+                <!-- Real-time Agentic Reason Text -->
+              </div>
+            </div>
+
+            <div class="operator-action-confirm">
+              <button id="confirmBinBtn" class="btn btn-primary btn-large btn-full-width">
+                ✓ Confirm Physical Bin Placement (Move to Next Unit)
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         ROLE 2: OPERATIONS & TRIAGE SUPERVISOR INTERFACE (Elena Rostova)
+         Shift capacity planning, constrained optimization & hazard containment.
+         ========================================================================= -->
+    <section id="roleSupervisorView" class="role-view">
+      <div class="view-intro-banner supervisor-banner">
+        <div class="banner-badge">STEP 2 IN REVERSE LOGISTICS CHAIN</div>
+        <h2>Shift Operations & Mathematical Optimization Control</h2>
+        <p>Operations Lead Elena Rostova (SUP-108) &bull; Managing Warehouse Shift Capacity & Quality Safety Containment</p>
+        
+        <!-- Multi-Batch Fleet Selector -->
+        <div class="batch-selector-bar">
+          <span class="batch-select-label">ACTIVE WAREHOUSE BATCH:</span>
+          <select id="supBatchSelectDropdown" class="batch-select-dropdown">
+            <option value="HB-09" selected>HB-09: HyperCell Li-Ion Battery 5000mAh (25 Units &bull; 🚨 Hazard Spikes)</option>
+            <option value="AP-12">AP-12: ApexTab Ultra 11" Tablet 256GB (18 Units &bull; High-Value Consumer)</option>
+            <option value="HB-08">HB-08: HyperGaN 65W Fast Charger (20 Units &bull; Fast-Moving Accessory)</option>
+            <option value="NG-03">NG-03: NanoGlow 15.6" OLED Panel (15 Units &bull; Fragile Assembly)</option>
+            <option value="VE-01">VE-01: VoltEdge Sine Inverter 1000W (12 Units &bull; Heavy Industrial)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Critical Alert Notification -->
+      <div id="supAlertBanner" class="alert-banner alert-critical">
+        <div class="alert-icon">🚨</div>
+        <div class="alert-content">
+          <div class="alert-title">LEVEL 1 CRITICAL DEFECT SPIKE FLAGGED BY BAY #4</div>
+          <div class="alert-desc">60.0% of Batch HB-09 exhibited lithium cell swelling. Shift supervisor containment directive enforced.</div>
+        </div>
+        <div class="alert-meta">
+          <span class="badge badge-hazard">ZONE D CONTAINMENT ACTIVE</span>
+        </div>
+      </div>
+
+      <!-- Supervisor KPI Row -->
+      <div class="kpi-grid">
+        <div class="kpi-card glass-panel">
+          <div class="kpi-label">Projected Net Salvage Value</div>
+          <div class="kpi-value text-accent" id="supNetSalvage">$2,962.90</div>
+          <div class="kpi-footer">Exact penny-accurate mathematical realization</div>
+        </div>
+
+        <div class="kpi-card glass-panel">
+          <div class="kpi-label">Value Lift vs Naive Dump</div>
+          <div class="kpi-value text-emerald" id="supUplift">+$1,971.93</div>
+          <div class="kpi-footer"><span class="pill pill-positive">+199.0%</span> uplift over FIFO liquidation</div>
+        </div>
+
+        <div class="kpi-card glass-panel">
+          <div class="kpi-label">Technician Shift Workload</div>
+          <div class="kpi-value text-amber" id="supLaborUsed">6.0 hrs</div>
+          <div class="kpi-footer" id="supLaborMax">Capacity Limit: 20.0 hrs</div>
+        </div>
+
+        <div class="kpi-card glass-panel">
+          <div class="kpi-label">Units Handed Off from Floor</div>
+          <div class="kpi-value">25 Units</div>
+          <div class="kpi-footer">100% Inbound Inspected (Bay #4)</div>
+        </div>
+      </div>
+
+      <!-- Split Optimization & Labor Slider -->
+      <div class="two-column-layout" style="margin-top: 20px;">
+        <div class="column-left">
+          <div class="glass-panel content-box">
+            <div class="panel-header">
+              <h3>Shift Routing Allocation</h3>
+              <span class="badge badge-subtle">CONSTRAINED MILP</span>
+            </div>
+
+            <!-- Distribution bar -->
+            <div class="channel-distribution-bar" id="supChannelDistBar"></div>
+            <!-- Cards -->
+            <div class="channel-cards-grid" id="supChannelCardsGrid"></div>
+
+            <!-- Interactive Slider -->
+            <div class="constraint-slider-box">
+              <div class="slider-header">
+                <label for="supLaborSlider">Technician Shift Labor Constraint:</label>
+                <span class="slider-val" id="supLaborSliderVal">20.0 hrs</span>
+              </div>
+              <input type="range" id="supLaborSlider" min="0" max="30" step="0.5" value="20" class="custom-range">
+              <p class="slider-hint"><strong>Demonstrate to Judges:</strong> Drag slider down to simulate technician shortages. Notice how the optimizer mathematically redirects units to second-best channels without backlog buildup.</p>
+              <!-- Real-time Agentic Solver Action Feedback -->
+              <div id="supAgentLaborNotice" class="agent-labor-notice" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Digital Twin Zone Status -->
+        <div class="column-right">
+          <div class="glass-panel content-box">
+            <div class="panel-header">
+              <h3>Warehouse Digital Twin & Quarantine Status</h3>
+              <span class="badge badge-hazard">HAZMAT ISOLATION</span>
+            </div>
+
+            <div class="floor-map-grid" style="margin: 10px 0;">
+              <div class="zone-card">
+                <div class="zone-badge">ZONE A</div>
+                <div class="zone-title">Standard Shelves</div>
+                <div class="zone-status">STATUS: CLEAR</div>
+              </div>
+              <div class="zone-card">
+                <div class="zone-badge">ZONE B</div>
+                <div class="zone-title">Secure Cages</div>
+                <div class="zone-status">STATUS: CLEAR</div>
+              </div>
+              <div class="zone-card">
+                <div class="zone-badge">ZONE C</div>
+                <div class="zone-title">Fragile Displays</div>
+                <div class="zone-status">STATUS: CLEAR</div>
+              </div>
+              <div class="zone-card zone-hazard-alert">
+                <div class="zone-badge">ZONE D</div>
+                <div class="zone-title">Hazard Quarantine</div>
+                <div class="zone-status">🚨 15 UNITS LOCKED</div>
+              </div>
+            </div>
+
+            <div class="quarantine-telemetry-box">
+              <h4>Supervisor Action Directive:</h4>
+              <p>Lock serials in ERP. Move affected units to Zone D (Fire-Safe Enclosures). Authorize batch transmission to Finance Executive David Chen.</p>
+            </div>
+
+            <button id="transmitToExecBtn" class="btn btn-primary btn-full-width" style="margin-top: 16px;">
+              Transmit Authorized Batch to Executive David Chen ➔
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         ROLE 3: FINANCE & LEGAL CLAIMS EXECUTIVE (David Chen)
+         Financial recovery realization, MSA contract dispute, and official RMA PDF.
+         ========================================================================= -->
+    <section id="roleExecutiveView" class="role-view">
+      <div class="view-intro-banner executive-banner">
+        <div class="banner-badge">STEP 3 IN REVERSE LOGISTICS CHAIN</div>
+        <h2>Financial Realization & Supplier Chargeback Executive Suite</h2>
+        <p>VP of Supply Chain & CFO David Chen (EXEC-001) &bull; Legal Indemnification & Official RMA Document Generation</p>
+        
+        <!-- Executive Batch Selector -->
+        <div class="batch-selector-bar" style="margin-top: 14px;">
+          <span class="batch-select-label">BATCH AUDIT & SIGN-OFF:</span>
+          <select id="execBatchSelectDropdown" class="batch-select-dropdown">
+            <option value="HB-09" selected>HB-09: HyperCell Li-Ion Battery 5000mAh (25 Units &bull; 🚨 Hazard Spikes)</option>
+            <option value="AP-12">AP-12: ApexTab Ultra 11" Tablet 256GB (18 Units &bull; High-Value Consumer)</option>
+            <option value="HB-08">HB-08: HyperGaN 65W Fast Charger (20 Units &bull; Fast-Moving Accessory)</option>
+            <option value="NG-03">NG-03: NanoGlow 15.6" OLED Panel (15 Units &bull; Fragile Assembly)</option>
+            <option value="VE-01">VE-01: VoltEdge Sine Inverter 1000W (12 Units &bull; Heavy Industrial)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Executive Financial Recovery Banner -->
+      <div class="exec-financial-banner glass-panel">
+        <div class="exec-stat-box">
+          <span class="exec-stat-label">Net Dollar Realization</span>
+          <span class="exec-stat-val text-accent">$2,962.90</span>
+          <span class="exec-stat-sub">Recovered across 25 units</span>
+        </div>
+        <div class="exec-stat-divider"></div>
+        <div class="exec-stat-box">
+          <span class="exec-stat-label">Net Value Lift vs Blind Dump</span>
+          <span class="exec-stat-val text-emerald">+$1,971.93</span>
+          <span class="exec-stat-sub">+199.0% Incremental Cash Flow</span>
+        </div>
+        <div class="exec-stat-divider"></div>
+        <div class="exec-stat-box">
+          <span class="exec-stat-label">Total Supplier Chargeback Claim</span>
+          <span class="exec-stat-val text-amber">$1,960.00</span>
+          <span class="exec-stat-sub">Under MSA Section 4.2 Indemnity</span>
+        </div>
+        <div class="exec-stat-divider"></div>
+        <div class="exec-stat-action" style="display:flex; flex-direction:column; gap:8px;">
+          <a id="execViewPdfBtn" href="/api/view-pdf/HB-09.pdf" target="_blank" class="btn btn-primary" style="text-decoration:none;">
+            👁️ Open Official PDF in Browser Tab
+          </a>
+          <a id="execDirectDownloadPdfBtn" href="/api/download/HB-09.pdf" download="Gadgetbay_RMA_HB-09.pdf" class="btn btn-secondary" style="text-decoration:none;">
+            ⬇️ Download File to Computer (.pdf)
+          </a>
+        </div>
+      </div>
+
+      <!-- Legal ReAct Reasoner Notice -->
+      <div class="glass-panel content-box" style="margin-top: 20px;">
+        <div class="panel-header">
+          <div>
+            <h3>Autonomous Legal Chargeback Notice to Supplier (HyperBattery Inc)</h3>
+            <p class="subtitle">Drafted automatically by AI Legal Sentinel citing Master Supply Agreement clauses</p>
+          </div>
+          <button class="btn btn-tiny" id="execCopyNoticeBtn">Copy Notice</button>
+        </div>
+
+        <pre class="legal-text" id="execLegalNotice">
+FORMAL NOTICE OF DEFECTIVE LOT & FULL CHARGEBACK INDEMNIFICATION
+DATE: Ref #HB-09-LEGAL-RMA-2026
+TO: Legal & Quality Assurance, HyperBattery Inc
+FROM: David Chen, VP of Supply Chain, Gadgetbay Operations
+
+Pursuant to Section 4.2 ('Manufacturer Defect Indemnification & Product Safety Warranty') of the Master Supply Agreement:
+Notice is hereby served that Batch #HB-09 exhibited an unacceptably high critical defect concentration of 60.0% (15 of 25 inspected units), exhibiting lithium-ion cell swelling and thermal instability exceeding the contractual 5.0% Acceptable Quality Limit (AQL).
+
+Demand is hereby executed for:
+1. Immediate 100% credit invoice debit covering all affected serials ($1,960.00).
+2. Vendor-subsidized courier pickup and hazardous material hazmat freight expenses.
+3. Written Root-Cause Corrective Action (RCCA) report within ten (10) business days.
+        </pre>
+
+        <!-- Final Chain of Custody Audit Signature Block -->
+        <div class="chain-signatures-box">
+          <div class="sig-card">
+            <span class="sig-role">1. Inbound Inspected By:</span>
+            <span class="sig-name">Marcus Vance (TECH-402)</span>
+            <span class="sig-status text-emerald">✓ VERIFIED & TRIAGED</span>
+          </div>
+          <div class="sig-card">
+            <span class="sig-role">2. Shift Allocation Authorized By:</span>
+            <span class="sig-name">Elena Rostova (SUP-108)</span>
+            <span class="sig-status text-emerald">✓ OPTIMIZED & QUARANTINED</span>
+          </div>
+          <div class="sig-card">
+            <span class="sig-role">3. Financial Claim Approved By:</span>
+            <span class="sig-name">David Chen (EXEC-001)</span>
+            <span class="sig-status text-emerald">✓ SIGNED & READY FOR RMA DISPATCH</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-left">Gadgetbay Enterprise Reverse Logistics &bull; Complete 3-Persona Chain of Custody</div>
+    <div class="footer-center">Floor Technician ➔ Operations Supervisor ➔ Finance Executive</div>
+  </footer>
+  </div><!-- /appWorkspace -->
+
+  <script src="/static/js/html5-qrcode.min.js"></script>
+  <script src="/static/js/zxing.min.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

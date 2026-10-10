@@ -1,0 +1,6 @@
+sku,refurb_cost,refurb_time_hours,resale_estimate,parts_availability
+SKU-HB-BAT5000,32.5,1.2,179.0,LIMITED
+SKU-HB-CHRG65W,8.0,0.4,55.0,HIGH
+SKU-APX-TAB11,55.0,2.5,360.0,HIGH
+SKU-NG-DISP15,25.0,1.0,135.0,MEDIUM
+SKU-VE-INV1000,48.0,2.0,275.0,HIGH

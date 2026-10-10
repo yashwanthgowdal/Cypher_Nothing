@@ -1,0 +1,35 @@
+{
+  "trained_at": "2026-10-10T03:53:00.667601",
+  "n_training_samples": 3200,
+  "n_test_samples": 800,
+  "accuracy": 0.9825,
+  "classes": [
+    "RESTOCK",
+    "RTV",
+    "REFURBISH",
+    "LIQUIDATE",
+    "QUARANTINE_SCRAP"
+  ],
+  "class_metrics": {
+    "RESTOCK": {
+      "recall": 1.0,
+      "count": 43
+    },
+    "RTV": {
+      "recall": 0.8923,
+      "count": 130
+    },
+    "REFURBISH": {
+      "recall": 1.0,
+      "count": 354
+    },
+    "LIQUIDATE": {
+      "recall": 1.0,
+      "count": 72
+    },
+    "QUARANTINE_SCRAP": {
+      "recall": 1.0,
+      "count": 201
+    }
+  }
+}

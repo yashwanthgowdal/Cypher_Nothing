@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+output/*.pdf
+*.pdf
+.DS_Store
+Thumbs.db
+.agent/
+.agents/
+node_modules/
+package-lock.json

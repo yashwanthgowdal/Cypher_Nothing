@@ -1,0 +1,91 @@
+return_id,sku,supplier_batch,grade,fault_code,days_since_dispatch,customer_comment
+RET-HB09-101,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,12,Device casing bulging significantly
+RET-HB09-102,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,14,Device casing bulging significantly
+RET-HB09-103,SKU-HB-BAT5000,HB-09,C,BATTERY_SWELLING,18,Device casing bulging significantly
+RET-HB09-104,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,21,Device casing bulging significantly
+RET-HB09-105,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,22,Device casing bulging significantly
+RET-HB09-106,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,24,Device casing bulging significantly
+RET-HB09-107,SKU-HB-BAT5000,HB-09,C,BATTERY_SWELLING,25,Device casing bulging significantly
+RET-HB09-108,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,27,Device casing bulging significantly
+RET-HB09-109,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,28,Device casing bulging significantly
+RET-HB09-110,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,29,Device casing bulging significantly
+RET-HB09-111,SKU-HB-BAT5000,HB-09,C,BATTERY_SWELLING,29,Device casing bulging significantly
+RET-HB09-112,SKU-HB-BAT5000,HB-09,D,BATTERY_SWELLING,30,Device casing bulging significantly
+RET-HB09-113,SKU-HB-BAT5000,HB-09,C,NO_POWER,32,General return
+RET-HB09-114,SKU-HB-BAT5000,HB-09,C,NO_POWER,35,General return
+RET-HB09-115,SKU-HB-BAT5000,HB-09,D,OVERHEATING,38,General return
+RET-HB09-116,SKU-HB-BAT5000,HB-09,D,OVERHEATING,41,General return
+RET-HB09-117,SKU-HB-BAT5000,HB-09,D,THERMAL_SHUTDOWN,45,General return
+RET-HB09-118,SKU-HB-BAT5000,HB-09,A,COSMETIC_BLEMISH,11,General return
+RET-HB09-119,SKU-HB-BAT5000,HB-09,A,COSMETIC_BLEMISH,15,General return
+RET-HB09-120,SKU-HB-BAT5000,HB-09,A,PACKAGING_DAMAGED,19,General return
+RET-HB09-121,SKU-HB-BAT5000,HB-09,B,MINOR_SCRATCH,22,General return
+RET-HB09-122,SKU-HB-BAT5000,HB-09,B,CONNECTOR_LOOSE,26,General return
+RET-HB09-123,SKU-HB-BAT5000,HB-09,B,CONNECTOR_LOOSE,33,General return
+RET-HB09-124,SKU-HB-BAT5000,HB-09,B,FIRMWARE_LOCK,37,General return
+RET-HB09-125,SKU-HB-BAT5000,HB-09,B,SLOW_DISCHARGE,40,General return
+RET-HB-08-201,SKU-HB-CHRG65W,HB-08,B,PACKAGING_DAMAGED,18,Standard customer return request
+RET-HB-08-202,SKU-HB-CHRG65W,HB-08,B,PACKAGING_DAMAGED,24,Standard customer return request
+RET-HB-08-203,SKU-HB-CHRG65W,HB-08,B,COSMETIC_BLEMISH,22,Standard customer return request
+RET-HB-08-204,SKU-HB-CHRG65W,HB-08,B,NO_POWER,14,Standard customer return request
+RET-HB-08-205,SKU-HB-CHRG65W,HB-08,C,PACKAGING_DAMAGED,7,Standard customer return request
+RET-HB-08-206,SKU-HB-CHRG65W,HB-08,C,NO_POWER,25,Standard customer return request
+RET-HB-08-207,SKU-HB-CHRG65W,HB-08,A,COSMETIC_BLEMISH,15,Standard customer return request
+RET-HB-08-208,SKU-HB-CHRG65W,HB-08,A,COSMETIC_BLEMISH,5,Standard customer return request
+RET-HB-08-209,SKU-HB-CHRG65W,HB-08,C,PACKAGING_DAMAGED,4,Standard customer return request
+RET-HB-08-210,SKU-HB-CHRG65W,HB-08,C,COSMETIC_BLEMISH,25,Standard customer return request
+RET-HB-08-211,SKU-HB-CHRG65W,HB-08,A,PACKAGING_DAMAGED,20,Standard customer return request
+RET-HB-08-212,SKU-HB-CHRG65W,HB-08,B,NO_POWER,13,Standard customer return request
+RET-HB-08-213,SKU-HB-CHRG65W,HB-08,C,NO_POWER,18,Standard customer return request
+RET-HB-08-214,SKU-HB-CHRG65W,HB-08,A,NO_POWER,15,Standard customer return request
+RET-HB-08-215,SKU-HB-CHRG65W,HB-08,B,PACKAGING_DAMAGED,6,Standard customer return request
+RET-HB-08-216,SKU-HB-CHRG65W,HB-08,A,NO_POWER,10,Standard customer return request
+RET-HB-08-217,SKU-HB-CHRG65W,HB-08,A,PACKAGING_DAMAGED,10,Standard customer return request
+RET-HB-08-218,SKU-HB-CHRG65W,HB-08,A,PACKAGING_DAMAGED,17,Standard customer return request
+RET-HB-08-219,SKU-HB-CHRG65W,HB-08,A,COSMETIC_BLEMISH,12,Standard customer return request
+RET-HB-08-220,SKU-HB-CHRG65W,HB-08,A,PACKAGING_DAMAGED,5,Standard customer return request
+RET-AP-12-221,SKU-APX-TAB11,AP-12,D,AUDIO_DISTORTION,31,Standard customer return request
+RET-AP-12-222,SKU-APX-TAB11,AP-12,C,SCREEN_CRACK,11,Standard customer return request
+RET-AP-12-223,SKU-APX-TAB11,AP-12,C,AUDIO_DISTORTION,17,Standard customer return request
+RET-AP-12-224,SKU-APX-TAB11,AP-12,B,TOUCH_UNRESPONSIVE,11,Standard customer return request
+RET-AP-12-225,SKU-APX-TAB11,AP-12,D,TOUCH_UNRESPONSIVE,33,Standard customer return request
+RET-AP-12-226,SKU-APX-TAB11,AP-12,B,TOUCH_UNRESPONSIVE,13,Standard customer return request
+RET-AP-12-227,SKU-APX-TAB11,AP-12,D,TOUCH_UNRESPONSIVE,32,Standard customer return request
+RET-AP-12-228,SKU-APX-TAB11,AP-12,C,TOUCH_UNRESPONSIVE,29,Standard customer return request
+RET-AP-12-229,SKU-APX-TAB11,AP-12,D,TOUCH_UNRESPONSIVE,13,Standard customer return request
+RET-AP-12-230,SKU-APX-TAB11,AP-12,B,TOUCH_UNRESPONSIVE,34,Standard customer return request
+RET-AP-12-231,SKU-APX-TAB11,AP-12,D,AUDIO_DISTORTION,11,Standard customer return request
+RET-AP-12-232,SKU-APX-TAB11,AP-12,B,AUDIO_DISTORTION,31,Standard customer return request
+RET-AP-12-233,SKU-APX-TAB11,AP-12,B,TOUCH_UNRESPONSIVE,11,Standard customer return request
+RET-AP-12-234,SKU-APX-TAB11,AP-12,B,SCREEN_CRACK,21,Standard customer return request
+RET-AP-12-235,SKU-APX-TAB11,AP-12,C,SCREEN_CRACK,27,Standard customer return request
+RET-AP-12-236,SKU-APX-TAB11,AP-12,B,SCREEN_CRACK,31,Standard customer return request
+RET-AP-12-237,SKU-APX-TAB11,AP-12,D,SCREEN_CRACK,12,Standard customer return request
+RET-AP-12-238,SKU-APX-TAB11,AP-12,B,AUDIO_DISTORTION,16,Standard customer return request
+RET-NG-03-239,SKU-NG-DISP15,NG-03,C,DEAD_PIXELS,10,Standard customer return request
+RET-NG-03-240,SKU-NG-DISP15,NG-03,C,DEAD_PIXELS,15,Standard customer return request
+RET-NG-03-241,SKU-NG-DISP15,NG-03,D,CRACKED_GLASS,20,Standard customer return request
+RET-NG-03-242,SKU-NG-DISP15,NG-03,D,CRACKED_GLASS,4,Standard customer return request
+RET-NG-03-243,SKU-NG-DISP15,NG-03,D,DEAD_PIXELS,13,Standard customer return request
+RET-NG-03-244,SKU-NG-DISP15,NG-03,D,BACKLIGHT_BLEED,12,Standard customer return request
+RET-NG-03-245,SKU-NG-DISP15,NG-03,D,DEAD_PIXELS,11,Standard customer return request
+RET-NG-03-246,SKU-NG-DISP15,NG-03,C,DEAD_PIXELS,19,Standard customer return request
+RET-NG-03-247,SKU-NG-DISP15,NG-03,D,CRACKED_GLASS,8,Standard customer return request
+RET-NG-03-248,SKU-NG-DISP15,NG-03,D,BACKLIGHT_BLEED,6,Standard customer return request
+RET-NG-03-249,SKU-NG-DISP15,NG-03,C,CRACKED_GLASS,8,Standard customer return request
+RET-NG-03-250,SKU-NG-DISP15,NG-03,D,BACKLIGHT_BLEED,6,Standard customer return request
+RET-NG-03-251,SKU-NG-DISP15,NG-03,C,DEAD_PIXELS,17,Standard customer return request
+RET-NG-03-252,SKU-NG-DISP15,NG-03,D,CRACKED_GLASS,12,Standard customer return request
+RET-NG-03-253,SKU-NG-DISP15,NG-03,D,CRACKED_GLASS,13,Standard customer return request
+RET-VE-01-254,SKU-VE-INV1000,VE-01,D,NO_POWER,22,Standard customer return request
+RET-VE-01-255,SKU-VE-INV1000,VE-01,C,CONNECTOR_LOOSE,20,Standard customer return request
+RET-VE-01-256,SKU-VE-INV1000,VE-01,D,NO_POWER,7,Standard customer return request
+RET-VE-01-257,SKU-VE-INV1000,VE-01,C,NO_POWER,26,Standard customer return request
+RET-VE-01-258,SKU-VE-INV1000,VE-01,C,NO_POWER,18,Standard customer return request
+RET-VE-01-259,SKU-VE-INV1000,VE-01,C,NO_POWER,7,Standard customer return request
+RET-VE-01-260,SKU-VE-INV1000,VE-01,B,CONNECTOR_LOOSE,22,Standard customer return request
+RET-VE-01-261,SKU-VE-INV1000,VE-01,C,OVERHEATING,13,Standard customer return request
+RET-VE-01-262,SKU-VE-INV1000,VE-01,B,OVERHEATING,28,Standard customer return request
+RET-VE-01-263,SKU-VE-INV1000,VE-01,B,OVERHEATING,15,Standard customer return request
+RET-VE-01-264,SKU-VE-INV1000,VE-01,D,OVERHEATING,14,Standard customer return request
+RET-VE-01-265,SKU-VE-INV1000,VE-01,D,OVERHEATING,26,Standard customer return request
